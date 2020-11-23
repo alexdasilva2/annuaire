@@ -4,6 +4,7 @@ public class TestGit {
 
 	public static void main(String[] args) {
 System.out.println("coucou");
+System.out.println("re coucou");
 	}
 
 }
