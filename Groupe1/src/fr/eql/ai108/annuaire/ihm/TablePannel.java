@@ -41,5 +41,4 @@ public class TablePannel extends AnchorPane {
 	}
 	
 	
-
 }

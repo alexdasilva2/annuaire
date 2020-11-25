@@ -10,10 +10,8 @@ public class StagiaireDao {
 	
 	private File file = new File("stagiaire.bin");
 	
-	
 	//methode getAll : on doit avoir la structure de notre fichier binaire 
 	//avant de pouvoir l'implémenter
-	
 	public List<Stagiaire> getAll() {
 		List<Stagiaire> stagiaires = new ArrayList<Stagiaire>();
 		RandomAccessFile raf = null;
@@ -23,9 +21,11 @@ public class StagiaireDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
 		return null;
+	}
+	
+	
+	public void nouvelleMethode() {
+		//pour la mise en forme : deux espaces entre chaque méthode
 	}
 }
