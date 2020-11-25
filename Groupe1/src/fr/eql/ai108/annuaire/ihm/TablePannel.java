@@ -17,7 +17,6 @@ public class TablePannel extends AnchorPane {
 		super();
 		
 	}
-
 	public StagiaireDao getDao() {
 		return dao;
 	}
