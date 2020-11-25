@@ -11,11 +11,11 @@ public class TablePannel extends AnchorPane {
 	private ObservableList<Stagiaire> observableStagiaires;
 	private TableView<Stagiaire> tableView;
 	
+	
 	public TablePannel() {
 		super();
 		
 	}
-
 	public StagiaireDao getDao() {
 		return dao;
 	}
