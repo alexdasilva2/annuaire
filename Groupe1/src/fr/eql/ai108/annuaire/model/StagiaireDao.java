@@ -10,6 +10,7 @@ public class StagiaireDao {
 	
 	private File file = new File("stagiaire.bin");
 	
+	
 	//methode getAll : on doit avoir la structure de notre fichier binaire 
 	//avant de pouvoir l'implémenter
 	public List<Stagiaire> getAll() {
