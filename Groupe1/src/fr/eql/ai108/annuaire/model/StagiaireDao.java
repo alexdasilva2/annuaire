@@ -8,6 +8,7 @@ import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class StagiaireDao {
 
 	private File file = new File("stagiaire.bin");
@@ -15,7 +16,7 @@ public class StagiaireDao {
 
 	//methode getAll : on doit avoir la structure de notre fichier binaire 
 	//avant de pouvoir l'implémenter
-	public List<Stagiaire> getAll() {
+	public List<Stagiaire> stagiaireFromBinaryFile() {
 		List<Stagiaire> stagiaires = new ArrayList<Stagiaire>();
 		RandomAccessFile raf = null;
 		try {
@@ -24,7 +25,7 @@ public class StagiaireDao {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return stagiaires;
 	}
 
 
@@ -116,6 +117,74 @@ public class StagiaireDao {
 		}
 
 		return taillesMax;
+	}
+	
+	
+	public static List<Stagiaire> stagiaireFromTextFile (BufferedReader inputFile) {
+		List<Stagiaire> stagiaires = new ArrayList<Stagiaire>();
+		int nbSautDeLigne=0;
+		String ligne ="";
+		String nom="";
+		String prenom ="";
+		int departement =0;
+		String promotion ="";
+		int annee=0;
+		try {
+			ligne = inputFile.readLine();
+			while(ligne != null) {
+				if (ligne.compareTo("*") ==0) {
+					Stagiaire stagiaire = new Stagiaire();
+					stagiaire.setNom(nom);
+					stagiaire.setPrenom(prenom);
+					stagiaire.setDepartement(departement);
+					stagiaire.setNomPromo(promotion);
+					stagiaire.setAnnee(annee);
+					stagiaires.add(stagiaire);
+					nbSautDeLigne=0;
+					nom="";
+					prenom ="";
+					departement =0;
+					promotion="";
+					annee=0;
+				} else {
+					switch (nbSautDeLigne) {
+					case 0:
+						nom = ligne;
+						nbSautDeLigne++;
+						break;
+					case 1:
+						prenom = ligne;
+						nbSautDeLigne++;
+						break;
+					case 2:
+						departement = Integer.parseInt(ligne);
+						nbSautDeLigne++;
+						break;
+					case 3:
+						promotion = ligne;
+						nbSautDeLigne++;
+						break;
+					case 4:
+						annee = Integer.parseInt(ligne);
+						nbSautDeLigne++;
+						break;
+					default:
+						break;
+					}
+				}
+				ligne = inputFile.readLine();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				inputFile.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return stagiaires;
 	}
 
 
