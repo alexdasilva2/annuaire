@@ -14,11 +14,11 @@ public class testArbre {
 
 
 
-		Stagiaire stagiaire1=new Stagiaire("LEPANTE", "Willy",95, "Ai78", 2010);
-		Stagiaire stagiaire2=new Stagiaire("LEPANTE", "Patrice",94, "ATOD7", 2009);
-		Stagiaire stagiaire3=new Stagiaire("CHICHEPORT", "Stephane",95, "ATOD8", 2009);
-		Stagiaire stagiaire4=new Stagiaire("SLIVCA", "Diana",95, "Ai84", 2012);
-		Stagiaire stagiaire5=new Stagiaire("AMANDINE", "Anna",75, "Ai112", 2020);
+		Stagiaire stagiaire1=new Stagiaire("LEPANTE", "Willy","95", "Ai78", "2010");
+		Stagiaire stagiaire2=new Stagiaire("LEPANTE", "Patrice","94", "ATOD7", "2009");
+		Stagiaire stagiaire3=new Stagiaire("CHICHEPORT", "Stephane","95", "ATOD8", "2009");
+		Stagiaire stagiaire4=new Stagiaire("SLIVCA", "Diana","95", "Ai84", "2012");
+		Stagiaire stagiaire5=new Stagiaire("AMANDINE", "Anna","75", "Ai112", "2020");
 
 
 		List<Stagiaire> stagiaires=new ArrayList<Stagiaire>();
