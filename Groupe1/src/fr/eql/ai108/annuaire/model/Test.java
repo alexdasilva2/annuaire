@@ -11,7 +11,6 @@ public class Test {
 
 	public static void main(String[] args) {		
 		int[] taillesMax = StagiaireDao.compterChar();
-		System.out.println(taillesMax[3]);
 		List<Stagiaire> stagiaires = new ArrayList<Stagiaire>();
 		stagiaires = StagiaireDao.stagiaireTrimFromTextFile();
 		
