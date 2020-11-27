@@ -1,14 +1,44 @@
 package fr.eql.ai108.annuaire.model;
 
 public class Stagiaire {
-	
+
 	private String nom;
 	private String prenom;
 	private int departement;
 	private String nomPromo;
 	private int annee;
-	
-	
+
+ public boolean comparerStagiaire(Stagiaire sg1, Stagiaire sg2) {
+		
+
+		{
+			if (sg1.getNom().compareTo(sg2.getNom())>0 )
+			{
+				return true;
+			}
+			if (sg1.getNom().compareTo(sg2.getNom())<0)
+			{
+				return false;	
+
+			}
+			if (sg1.getNom().equals(sg2.getNom()))
+			{
+				if (sg1.getPrenom().compareTo(sg2.getPrenom())>0 )
+				{
+					return true;
+				}
+				if (sg1.getPrenom().compareTo(sg2.getPrenom())<0)
+				{
+					return true;	
+
+				}
+			}
+			
+		}
+ 
+		return false;
+		
+}
 	public Stagiaire() {
 		super();
 	}
@@ -124,8 +154,8 @@ public class Stagiaire {
 	public void setAnnee(int annee) {
 		this.annee = annee;
 	}
-	
-	
-	
 
-}
+ 
+
+	}
+
