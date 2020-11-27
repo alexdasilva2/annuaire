@@ -18,7 +18,7 @@ public class TablePannel extends AnchorPane {
 	
 	@SuppressWarnings("unchecked")
 	public TablePannel() {
-		observableStagiaires = FXCollections.observableArrayList(dao.getAll()); //écrire la méthode getAll()
+		observableStagiaires = FXCollections.observableArrayList(dao.stagiaireFromBinaryFile()); //écrire la méthode getAll()
 		tableView = new TableView<>(observableStagiaires);
 		TableColumn<Stagiaire, String> colNom = new TableColumn<>("Nom");
 		colNom.setCellValueFactory(new PropertyValueFactory<>("Nom"));
