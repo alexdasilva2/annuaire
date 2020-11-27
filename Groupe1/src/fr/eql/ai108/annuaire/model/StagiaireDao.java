@@ -267,6 +267,7 @@ public class StagiaireDao {
 		return leStagiaire;
 	}
 	
+	
 	public static List<Stagiaire> stagiaireTrimFromTextFile () {
 		FileReader in = null;
 		BufferedReader inputFile = null;

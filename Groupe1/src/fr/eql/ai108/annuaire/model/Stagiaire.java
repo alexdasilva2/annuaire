@@ -82,6 +82,7 @@ public class Stagiaire {
 	}
 
 
+	
 	public String getNom() {
 		return nom;
 	}

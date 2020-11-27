@@ -20,7 +20,6 @@ public class testArbre {
 		Stagiaire stagiaire4=new Stagiaire("SLIVCA", "Diana","95", "Ai84", "2012");
 		Stagiaire stagiaire5=new Stagiaire("AMANDINE", "Anna","75", "Ai112", "2020");
 
-
 		List<Stagiaire> stagiaires=new ArrayList<Stagiaire>();
 		Collections.addAll(stagiaires, stagiaire1,stagiaire2,stagiaire3,stagiaire4,stagiaire5);
 
