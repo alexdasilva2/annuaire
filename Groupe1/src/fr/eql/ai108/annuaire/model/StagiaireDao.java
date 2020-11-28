@@ -26,7 +26,7 @@ public class StagiaireDao {
 		} 
 	}
 
-	//methode getAll : on doit avoir la structure de notre fichier binaire 
+	//methode stagiaireFromBinaryFile : on doit avoir la structure de notre fichier binaire 
 	//avant de pouvoir l'implémenter
 	public static List<Stagiaire> stagiaireFromBinaryFile(RandomAccessFile raf) {
 		List<Stagiaire> stagiaires = new ArrayList<Stagiaire>();
@@ -189,7 +189,7 @@ public class StagiaireDao {
 				if (ligne.compareTo("*") ==0) {
 					nbSautDeLigne=0;		
 				} else {
-					char[] tableau = ligne.toCharArray();
+					char[] tableau = ligne.trim().toCharArray();
 					switch (nbSautDeLigne) {
 					case 0 :
 						for (int i = 0; i< tableau.length; i++) {
@@ -263,7 +263,7 @@ public class StagiaireDao {
 
 	public static  String stagiaireToString (Stagiaire stagiaire) {
 		String leStagiaire = "";
-		leStagiaire = stagiaire.getNom()+stagiaire.getPrenom()+String.valueOf(stagiaire.getDepartement())+stagiaire.getNomPromo()+String.valueOf(stagiaire.getAnnee());
+		leStagiaire = stagiaire.getNom()+stagiaire.getPrenom()+stagiaire.getDepartement()+stagiaire.getNomPromo()+stagiaire.getAnnee();
 		return leStagiaire;
 	}
 	
@@ -302,51 +302,51 @@ public class StagiaireDao {
 				} else {
 					switch (nbSautDeLigne) {
 					case 0:
-						ligne = ligne.trim();
 						for (int i =0; i<ligne.toCharArray().length; i++) {
 							nom = nom + ligne.toCharArray()[i];
 						}
-						for (int i =0; i<(taillesMax[0] - ligne.toCharArray().length); i++) {
+						nom = nom.trim();
+						for (int i =0; i<(taillesMax[0] - ligne.trim().toCharArray().length); i++) {
 							nom = nom + " ";
 						}
 						nbSautDeLigne++;
 						break;
 					case 1:
-						ligne = ligne.trim();
 						for (int i = 0; i<ligne.toCharArray().length; i++) {
 							prenom = prenom + ligne.toCharArray()[i];
 						}
-						for (int i = 0; i<taillesMax[1] - ligne.toCharArray().length; i++) {
+						prenom = prenom.trim();
+						for (int i = 0; i<taillesMax[1] - ligne.trim().toCharArray().length; i++) {
 							prenom = prenom + " ";
 						}
 						nbSautDeLigne++;
 						break;
 					case 2:
-						ligne = ligne.trim();
 						for (int i = 0; i<ligne.toCharArray().length; i++) {
 							departement = departement + ligne.toCharArray()[i];
 						}
-						for (int i = 0; i<taillesMax[2] - ligne.toCharArray().length; i++) {
+						departement = departement.trim();
+						for (int i = 0; i<taillesMax[2] - ligne.trim().toCharArray().length; i++) {
 							departement = departement + " ";
 						}
 						nbSautDeLigne++;
 						break;
 					case 3:
-						ligne = ligne.trim();
 						for (int i = 0; i<ligne.toCharArray().length; i++) {
 							promotion = promotion + ligne.toCharArray()[i];
 						}
-						for (int i = 0; i<taillesMax[3] - ligne.toCharArray().length; i++) {
+						promotion = promotion.trim();
+						for (int i = 0; i<taillesMax[3] - ligne.trim().toCharArray().length; i++) {
 							promotion = promotion +  " ";
 						}
 						nbSautDeLigne++;
 						break;
 					case 4:
-						ligne = ligne.trim();
 						for (int i = 0; i<ligne.toCharArray().length; i++) {
 							annee = annee + ligne.toCharArray()[i];
 						}
-						for (int i = 0; i<taillesMax[4] - ligne.toCharArray().length; i++) {
+						annee = annee.trim();
+						for (int i = 0; i<taillesMax[4] - ligne.trim().toCharArray().length; i++) {
 							annee = annee + " ";
 						}
 						nbSautDeLigne++;
