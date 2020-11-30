@@ -107,6 +107,7 @@ public class StagiaireDao {
 		return taillesMax;
 	}
 
+	
 	public static  String stagiaireToString (Stagiaire stagiaire) {
 		//méthode qui permet de récupérer une String unique avec toutes les infos d'un stagiaire
 		String leStagiaire = "";
@@ -226,6 +227,7 @@ public class StagiaireDao {
 		return stagiaires;
 	}
 	
+	
 	public static List<Stagiaire> stagiaireFromRaf(RandomAccessFile raf) { //en cours de dev
 		List<Stagiaire> stagiaires = new ArrayList<Stagiaire>();
 		int[] taillesMax = compterChar(); //normalement pour être propre faire une méthode compter char depuis le binary
@@ -318,6 +320,7 @@ public class StagiaireDao {
 		}
 		return stagiaires;
 	}
+	
 	
 	public static List<Stagiaire> stagiaireFromTextFile (BufferedReader inputFile) {
 		//méthode à ne pas utiliser non plus, elle revnoie des stagiaires fromTextFile mais non trim
