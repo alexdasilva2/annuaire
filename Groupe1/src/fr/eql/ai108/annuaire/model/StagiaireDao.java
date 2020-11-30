@@ -17,9 +17,10 @@ public class StagiaireDao {
 		//fromTextFile originel stagiaires.txt
 		//méthode qui compte le nombre de caractères de chaque champ
 		//prend en compte le trim (supprime les espaces en trop)
+		//méthode qui renvoie un tableau d'int, avec les taillesMax de chaque champ
 		FileReader in = null;
 		BufferedReader inputFile = null;
-		int[] taillesMax = {0,0,0,0,0}; //tableau des tailles Max
+		int[] taillesMax = {0,0,0,0,0};
 		int tailleChamp = 0;
 		int nbSautDeLigne =0;
 		String ligne = "";
@@ -27,12 +28,15 @@ public class StagiaireDao {
 			in = new FileReader("stagiaires.txt");
 			inputFile = new BufferedReader(in);
 			ligne = inputFile.readLine();
-			while (ligne != null) {
+			while (ligne != null) { //tant qu'il reste une ligne dans le fichier
 				if (ligne.compareTo("*") ==0) {
-					nbSautDeLigne=0;		
+					nbSautDeLigne=0; //si c'est une étoile, implémente "saut de ligne" : passe au stagiaire suivant
 				} else {
-					char[] tableau = ligne.trim().toCharArray();
+					char[] tableau = ligne.trim().toCharArray(); //enleve les espaces en trop
+					// et convertie la ligne en tableau de caractère
 					switch (nbSautDeLigne) {
+					//pour chaque ligne, tu compte le nombre de caractère
+					//si c'est supérieur à tailleMax[numeroLigne] tu remplaces, sinon tu fais rien
 					case 0 :
 						for (int i = 0; i< tableau.length; i++) {
 							tailleChamp++;
@@ -104,6 +108,7 @@ public class StagiaireDao {
 	}
 
 	public static  String stagiaireToString (Stagiaire stagiaire) {
+		//méthode qui permet de récupérer une String unique avec toutes les infos d'un stagiaire
 		String leStagiaire = "";
 		leStagiaire = stagiaire.getNom()+stagiaire.getPrenom()+stagiaire.getDepartement()+stagiaire.getPromotion()+stagiaire.getAnnee();
 		return leStagiaire;
@@ -112,6 +117,7 @@ public class StagiaireDao {
 	
 	public static List<Stagiaire> stagiaireTrimFromTextFile () { 
 		//Méthode à utiliser pour récupérer les champs stagiaires de bonne taille depuis le fichier stagiaires.txt 
+		//renvoie une liste de Stagiaire, au bon format (taille champ + taille ligne)
 		FileReader in = null;
 		BufferedReader inputFile = null;
 		List<Stagiaire> stagiaires = new ArrayList<Stagiaire>();
@@ -122,13 +128,15 @@ public class StagiaireDao {
 		String departement ="";
 		String promotion ="";
 		String annee="";
-		int[] taillesMax = compterChar();
+		int[] taillesMax = compterChar(); //on compte la tailleMax de chaque champ pour savoir combien d'espaces écrire
 		try {
 			in = new FileReader("stagiaires.txt");
 			inputFile = new BufferedReader(in);
 			ligne = inputFile.readLine().trim();
 			while(ligne != null) {
 				if (ligne.compareTo("*") ==0) {
+					//a chaque nouveau stagiaire : j'instancie un nouveau stagiaire,
+					//jé récupère les infos de chaque champs, j'ajoute le stagiaire à la liste
 					Stagiaire stagiaire = new Stagiaire();
 					stagiaire.setNom(nom);
 					stagiaire.setPrenom(prenom);
@@ -136,6 +144,7 @@ public class StagiaireDao {
 					stagiaire.setPromotion(promotion);
 					stagiaire.setAnnee(annee);
 					stagiaires.add(stagiaire);
+					//et je re-initialise les valeurs saut de ligne, et les champs
 					nbSautDeLigne=0;
 					nom="";
 					prenom ="";
@@ -144,11 +153,14 @@ public class StagiaireDao {
 					annee="";
 				} else {
 					switch (nbSautDeLigne) {
+					//comme pour la méthode compterChar, à chaque ligne, je récupère une String avec le champ
+					//je concatène chaque charactère pour former le nom
 					case 0:
 						for (int i =0; i<ligne.toCharArray().length; i++) {
 							nom = nom + ligne.toCharArray()[i];
 						}
-						nom = nom.trim();
+						nom = nom.trim(); //je trim pour enlever les espaces supplémentaires
+						//puis je concatène autant d'espaces que necessaire pour arriver à la tailleMax de chaque champ
 						for (int i =0; i<(taillesMax[0] - ligne.trim().toCharArray().length); i++) {
 							nom = nom + " ";
 						}
@@ -216,12 +228,12 @@ public class StagiaireDao {
 	
 	public static List<Stagiaire> stagiaireFromRaf(RandomAccessFile raf) { //en cours de dev
 		List<Stagiaire> stagiaires = new ArrayList<Stagiaire>();
-		int[] taillesMax = compterChar(); //normalement faire un compter char depuis le binary
+		int[] taillesMax = compterChar(); //normalement pour être propre faire une méthode compter char depuis le binary
 		int tailleLigne = 0;
 		for (int i=0; i< taillesMax.length; i++) {
 			tailleLigne = tailleLigne + taillesMax[i];
 		}
-		tailleLigne = tailleLigne + 16; //la String stagiaire + deux longs pour les positions des fils
+		tailleLigne = tailleLigne + 16; //la String stagiaire + 16 (taille de deux longs pour les positions des fils)
 		try {
 			for (int i = 0; i < (int)raf.length(); i++) {
 				raf.seek(i*tailleLigne);
@@ -308,6 +320,8 @@ public class StagiaireDao {
 	}
 	
 	public static List<Stagiaire> stagiaireFromTextFile (BufferedReader inputFile) {
+		//méthode à ne pas utiliser non plus, elle revnoie des stagiaires fromTextFile mais non trim
+		//trop d'espaces pour certains champs
 		List<Stagiaire> stagiaires = new ArrayList<Stagiaire>();
 		int nbSautDeLigne=0;
 		String ligne ="";
