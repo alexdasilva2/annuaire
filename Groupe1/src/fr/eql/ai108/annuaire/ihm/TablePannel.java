@@ -19,7 +19,8 @@ public class TablePannel extends AnchorPane {
 	
 	@SuppressWarnings("unchecked")
 	public TablePannel() {
-		observableStagiaires = FXCollections.observableArrayList(dao.stagiaireFromBinaryFile(raf)); //écrire la méthode getAll()
+		//methode correspondant au setOnAction du bouton visualiser liste de stagiaires en fait :
+		observableStagiaires = FXCollections.observableArrayList(StagiaireDao.stagiaireTrimFromTextFile()); //changer la méthode pour invoquer le fichier binaire
 		tableView = new TableView<>(observableStagiaires);
 		TableColumn<Stagiaire, String> colNom = new TableColumn<>("Nom");
 		colNom.setCellValueFactory(new PropertyValueFactory<>("Nom"));
@@ -27,17 +28,17 @@ public class TablePannel extends AnchorPane {
 		TableColumn<Stagiaire, String> colPrenom = new TableColumn<>("Prenom");
 		colPrenom.setCellValueFactory(new PropertyValueFactory<>("Prenom"));
 		colPrenom.setStyle("-fx-alignment : CENTER");
-		TableColumn<Stagiaire, Integer> colDepartement = new TableColumn<>("Departement");
+		TableColumn<Stagiaire, String> colDepartement = new TableColumn<>("Departement");
 		colDepartement.setCellValueFactory(new PropertyValueFactory<>("Departement"));
 		colDepartement.setStyle("-fx-alignment : CENTER");
-		TableColumn<Stagiaire, String> colNomPromo = new TableColumn<>("Promotion");
-		colNomPromo.setCellValueFactory(new PropertyValueFactory<>("Promotion"));
-		colNomPromo.setStyle("-fx-alignment : CENTER");
-		TableColumn<Stagiaire, Integer> colAnnee = new TableColumn<Stagiaire, Integer>("Annee");
+		TableColumn<Stagiaire, String> colPromotion = new TableColumn<Stagiaire, String>("Promotion");
+		colPromotion.setCellValueFactory(new PropertyValueFactory<>("Promotion"));
+		colPromotion.setStyle("-fx-alignment : CENTER");
+		TableColumn<Stagiaire, String> colAnnee = new TableColumn<>("Annee");
 		colAnnee.setCellValueFactory(new PropertyValueFactory<>("Annee"));
 		colAnnee.setStyle("-fx-alignment : CENTER");
 		
-		tableView.getColumns().addAll(colNom, colPrenom, colDepartement, colNomPromo, colAnnee);
+		tableView.getColumns().addAll(colNom, colPrenom, colDepartement,colPromotion,colAnnee);
 		tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		getChildren().add(tableView);
 		

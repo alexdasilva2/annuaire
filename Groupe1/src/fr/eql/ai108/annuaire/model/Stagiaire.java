@@ -5,7 +5,7 @@ public class Stagiaire {
 	private String nom;
 	private String prenom;
 	private String departement;
-	private String nomPromo;
+	private String promotion;
 	private String annee;
 	
 	
@@ -14,20 +14,20 @@ public class Stagiaire {
 	}
 
 
-	public Stagiaire(String nom, String prenom, String departement, String nomPromo, String annee) {
+	public Stagiaire(String nom, String prenom, String departement, String promotion, String annee) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.departement = departement;
-		this.nomPromo = nomPromo;
+		this.promotion = promotion;
 		this.annee = annee;
 	}
 
 
 	@Override
 	public String toString() {
-		return "Stagiaire [nom=" + nom + ", prenom=" + prenom + ", departement=" + departement + ", nomPromo="
-				+ nomPromo + ", annee=" + annee + "]";
+		return "Stagiaire [nom=" + nom + ", prenom=" + prenom + ", departement=" + departement + ", promotion="
+				+ promotion + ", annee=" + annee + "]";
 	}
 
 
@@ -38,7 +38,7 @@ public class Stagiaire {
 		result = prime * result + ((annee == null) ? 0 : annee.hashCode());
 		result = prime * result + ((departement == null) ? 0 : departement.hashCode());
 		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
-		result = prime * result + ((nomPromo == null) ? 0 : nomPromo.hashCode());
+		result = prime * result + ((promotion == null) ? 0 : promotion.hashCode());
 		result = prime * result + ((prenom == null) ? 0 : prenom.hashCode());
 		return result;
 	}
@@ -68,10 +68,10 @@ public class Stagiaire {
 				return false;
 		} else if (!nom.equals(other.nom))
 			return false;
-		if (nomPromo == null) {
-			if (other.nomPromo != null)
+		if (promotion == null) {
+			if (other.promotion != null)
 				return false;
-		} else if (!nomPromo.equals(other.nomPromo))
+		} else if (!promotion.equals(other.promotion))
 			return false;
 		if (prenom == null) {
 			if (other.prenom != null)
@@ -112,13 +112,13 @@ public class Stagiaire {
 	}
 
 
-	public String getNomPromo() {
-		return nomPromo;
+	public String getPromotion() {
+		return promotion;
 	}
 
 
-	public void setNomPromo(String nomPromo) {
-		this.nomPromo = nomPromo;
+	public void setPromotion(String promotion) {
+		this.promotion = promotion;
 	}
 
 
