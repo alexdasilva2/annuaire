@@ -220,7 +220,6 @@ public class StagiaireDao {
 			try {
 				inputFile.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -228,23 +227,81 @@ public class StagiaireDao {
 	}
 	
 	
-	public static List<Stagiaire> stagiaireFromRaf(RandomAccessFile raf) { //en cours de dev
+	public static List<Stagiaire> stagiaireFromRaf() {
+		RandomAccessFile raf = null;
 		List<Stagiaire> stagiaires = new ArrayList<Stagiaire>();
-		int[] taillesMax = compterChar(); //normalement pour être propre faire une méthode compter char depuis le binary
-		int tailleLigne = 0;
+		int[] taillesMax = compterChar(); 
+		int tailleStrStagiaire = 0;
+		int tailleLigne=0;
+		String nom = "";
+		String prenom = "";
+		String departement = "";
+		String promotion = "";
+		String annee = "";
+		long position = 0L;
 		for (int i=0; i< taillesMax.length; i++) {
-			tailleLigne = tailleLigne + taillesMax[i];
+			tailleStrStagiaire = tailleStrStagiaire + taillesMax[i];
 		}
-		tailleLigne = tailleLigne + 16; //la String stagiaire + 16 (taille de deux longs pour les positions des fils)
+		tailleLigne = tailleStrStagiaire + 16; //la String stagiaire + 16 (taille de deux longs pour les positions des fils)
 		try {
-			for (int i = 0; i < (int)raf.length(); i++) {
-				raf.seek(i*tailleLigne);
+			raf = new RandomAccessFile("TestRAF.txt", "r"); // !! a changer pour mettre le vrai fichier binaire !!
+			for (long i = 0; i < (raf.length()/(long)tailleLigne); i++) { 
+				position = i*tailleLigne; //je place le pointeur au début de chaque stagiaire
+				raf.seek(position);
 				raf.getFilePointer();
-			}
-			
+				//pour chaque champ : 
+				//on déplace le pointeur d'un octet, pour lire caractère par caractère
+				//concatène une string du champ + le caractère lu dans le RAF
+				//on arrête à la fin de chaque champ, et on passe au suivant
+					for (int j =0; j<taillesMax[0]; j++) {
+						raf.seek(position);
+						raf.getFilePointer();
+						nom = nom + (char)raf.readByte();
+						position++;
+					}
+					for (int j =0; j<taillesMax[1]; j++) {
+						raf.seek(position);
+						raf.getFilePointer();
+						prenom = prenom + (char)raf.readByte();
+						position++;
+					}
+					for (int j =0; j<taillesMax[2]; j++) {
+						raf.seek(position);
+						raf.getFilePointer();
+						departement = departement + (char)raf.readByte();
+						position++;
+					}
+					for (int j =0; j<taillesMax[3]; j++) {
+						raf.seek(position);
+						raf.getFilePointer();
+						promotion = promotion + (char)raf.readByte();
+						position++;
+					}
+					for (int j =0; j<taillesMax[4]; j++) {
+						raf.seek(position);
+						raf.getFilePointer();
+						annee = annee + (char)raf.readByte();
+						position++;
+					}
+					//on implémente un nouveau stagiaire avec les Strings lues dans le RAF 
+					//et on ajoute à la liste de stagiaires
+					Stagiaire stagiaire = new Stagiaire(nom, prenom, departement, promotion, annee);
+					stagiaires.add(stagiaire);
+					//on réinitialise avant de passer à la ligne suivante
+					nom = "";
+					prenom = "";
+					departement = "";
+					promotion = "";
+					annee = "";
+				}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {
+				raf.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return stagiaires;
 	}
