@@ -43,6 +43,7 @@ public class TablePannel extends AnchorPane {
 		tableView.getColumns().addAll(colNom, colPrenom, colDepartement,colPromotion,colAnnee);
 		tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		getChildren().add(tableView);
+		tableView.getSortOrder().add(colNom);  //Trie de la tableView grace a la methode SortOrder
 		
 		setPrefSize(1000, 500);
 		AnchorPane.setTopAnchor(tableView, 5.);

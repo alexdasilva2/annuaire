@@ -1,6 +1,4 @@
 package fr.eql.ai108.annuaire.model;
-import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,8 +35,13 @@ public class Test {
 		for (int i =0; i<20 ; i++) {
 			System.out.println(strStagiaires.get(i));
 		}
+		
+		System.out.println("test méthode stagiaireFromRaf :");
+		List<Stagiaire> stagiairesFromRaf = new ArrayList<Stagiaire>();
+		stagiairesFromRaf = StagiaireDao.stagiaireFromRaf();
+		for (int i = 0; i<20; i++) {
+			System.out.println(stagiairesFromRaf.get(i));
+		}
 	}
-
-	
 
 }
