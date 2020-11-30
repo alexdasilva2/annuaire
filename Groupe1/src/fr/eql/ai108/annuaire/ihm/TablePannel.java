@@ -1,5 +1,7 @@
 package fr.eql.ai108.annuaire.ihm;
 
+import java.io.RandomAccessFile;
+
 import fr.eql.ai108.annuaire.model.Stagiaire;
 import fr.eql.ai108.annuaire.model.StagiaireDao;
 import javafx.collections.FXCollections;
@@ -10,15 +12,16 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 public class TablePannel extends AnchorPane {
-	
-	private StagiaireDao dao = new StagiaireDao();
-	private ObservableList<Stagiaire> observableStagiaires;
-	private TableView<Stagiaire> tableView;
-	
+
+	private static  StagiaireDao dao = new StagiaireDao();
+	private static ObservableList<Stagiaire> observableStagiaires;
+	private static TableView<Stagiaire> tableView;
+	private static RandomAccessFile raf;
+
 	
 	@SuppressWarnings("unchecked")
 	public TablePannel() {
-		observableStagiaires = FXCollections.observableArrayList(dao.stagiaireFromBinaryFile()); //écrire la méthode getAll()
+		observableStagiaires = FXCollections.observableArrayList(dao.stagiaireFromBinaryFile(raf)); //écrire la méthode getAll()
 		tableView = new TableView<>(observableStagiaires);
 		TableColumn<Stagiaire, String> colNom = new TableColumn<>("Nom");
 		colNom.setCellValueFactory(new PropertyValueFactory<>("Nom"));
@@ -46,29 +49,40 @@ public class TablePannel extends AnchorPane {
 		AnchorPane.setRightAnchor(tableView, 5.);
 		AnchorPane.setLeftAnchor(tableView, 5.);
 	}
-	public StagiaireDao getDao() {
+
+	public static StagiaireDao getDao() {
 		return dao;
 	}
 
-	public void setDao(StagiaireDao dao) {
-		this.dao = dao;
+	public static void setDao(StagiaireDao dao) {
+		TablePannel.dao = dao;
 	}
 
-	public ObservableList<Stagiaire> getObservableStagiaires() {
+	public static ObservableList<Stagiaire> getObservableStagiaires() {
 		return observableStagiaires;
 	}
 
-	public void setObservableStagiaires(ObservableList<Stagiaire> observableStagiaires) {
-		this.observableStagiaires = observableStagiaires;
+	public static void setObservableStagiaires(ObservableList<Stagiaire> observableStagiaires) {
+		TablePannel.observableStagiaires = observableStagiaires;
 	}
 
-	public TableView<Stagiaire> getTableView() {
+	public static TableView<Stagiaire> getTableView() {
 		return tableView;
 	}
 
-	public void setTableView(TableView<Stagiaire> tableView) {
-		this.tableView = tableView;
+	public static void setTableView(TableView<Stagiaire> tableView) {
+		TablePannel.tableView = tableView;
 	}
+
+	public static RandomAccessFile getRaf() {
+		return raf;
+	}
+
+	public static void setRaf(RandomAccessFile raf) {
+		TablePannel.raf = raf;
+	}
+
+	
 	
 	
 }

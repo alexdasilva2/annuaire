@@ -4,9 +4,9 @@ public class Stagiaire {
 	
 	private String nom;
 	private String prenom;
-	private int departement;
+	private String departement;
 	private String nomPromo;
-	private int annee;
+	private String annee;
 	
 	
 	public Stagiaire() {
@@ -14,7 +14,7 @@ public class Stagiaire {
 	}
 
 
-	public Stagiaire(String nom, String prenom, int departement, String nomPromo, int annee) {
+	public Stagiaire(String nom, String prenom, String departement, String nomPromo, String annee) {
 		super();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -35,8 +35,8 @@ public class Stagiaire {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + annee;
-		result = prime * result + departement;
+		result = prime * result + ((annee == null) ? 0 : annee.hashCode());
+		result = prime * result + ((departement == null) ? 0 : departement.hashCode());
 		result = prime * result + ((nom == null) ? 0 : nom.hashCode());
 		result = prime * result + ((nomPromo == null) ? 0 : nomPromo.hashCode());
 		result = prime * result + ((prenom == null) ? 0 : prenom.hashCode());
@@ -53,9 +53,15 @@ public class Stagiaire {
 		if (getClass() != obj.getClass())
 			return false;
 		Stagiaire other = (Stagiaire) obj;
-		if (annee != other.annee)
+		if (annee == null) {
+			if (other.annee != null)
+				return false;
+		} else if (!annee.equals(other.annee))
 			return false;
-		if (departement != other.departement)
+		if (departement == null) {
+			if (other.departement != null)
+				return false;
+		} else if (!departement.equals(other.departement))
 			return false;
 		if (nom == null) {
 			if (other.nom != null)
@@ -96,12 +102,12 @@ public class Stagiaire {
 	}
 
 
-	public int getDepartement() {
+	public String getDepartement() {
 		return departement;
 	}
 
 
-	public void setDepartement(int departement) {
+	public void setDepartement(String departement) {
 		this.departement = departement;
 	}
 
@@ -116,16 +122,15 @@ public class Stagiaire {
 	}
 
 
-	public int getAnnee() {
+	public String getAnnee() {
 		return annee;
 	}
 
 
-	public void setAnnee(int annee) {
+	public void setAnnee(String annee) {
 		this.annee = annee;
 	}
-	
-	
-	
+
+
 
 }
