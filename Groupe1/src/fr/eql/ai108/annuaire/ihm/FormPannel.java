@@ -25,7 +25,7 @@ public class FormPannel extends VBox {
 	private HBox hBoxAnnee;
 
 	public FormPannel() {
-		hBoxNom = new HBox(91);
+		hBoxNom = new HBox(92);
 		lblNom = new Label("Nom :");
 		tfNom = new TextField("");
 		tfNom.setPrefSize(150, 5);
@@ -43,7 +43,7 @@ public class FormPannel extends VBox {
 		tfDepartement.setPrefSize(150, 5);
 		hBoxDepartement.getChildren().addAll(lblDepartement, tfDepartement);
 		
-		hBoxPromo = new HBox(63);
+		hBoxPromo = new HBox(64);
 		lblPromo = new Label("Promotion :");
 		tfPromo = new TextField("");
 		tfPromo.setPrefSize(150, 5);
@@ -56,7 +56,7 @@ public class FormPannel extends VBox {
 		hBoxAnnee.getChildren().addAll(lblAnnee, tfAnnee);
 		
 		getChildren().addAll(hBoxNom, hBoxPrenom, hBoxDepartement, hBoxPromo, hBoxAnnee);
-		setPadding(new Insets(15, 15, 15, 15));
+		setPadding(new Insets(15, 15, 50, 15));
 		setSpacing(10);
 	}
 
