@@ -12,10 +12,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 public class TablePannel extends AnchorPane {
+
 	private static  StagiaireDao dao = new StagiaireDao();
 	private static ObservableList<Stagiaire> observableStagiaires;
 	private static TableView<Stagiaire> tableView;
 	private static RandomAccessFile raf;
+
 	
 	@SuppressWarnings("unchecked")
 	public TablePannel() {

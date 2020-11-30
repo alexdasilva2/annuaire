@@ -10,7 +10,7 @@ public class MainPanel extends BorderPane {
 		setLeft(lp);
 		setRight(tp);
 	}
-
+ 
 	public LeftPannel getLp() {
 		return lp;
 	}
