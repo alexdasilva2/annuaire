@@ -1,7 +1,5 @@
 package fr.eql.ai108.annuaire.model;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class Noeud {
 	String stagiaire;

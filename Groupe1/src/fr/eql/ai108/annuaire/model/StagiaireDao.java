@@ -448,6 +448,87 @@ public class StagiaireDao {
 		}
 		return stagiaires;
 	}
+	
+	
+	//méthodes pour écrire le fichierbinaire
+	public static void ecrireString (RandomAccessFile raf, Long curseur, String uneString) {
+		try {
+			raf.seek(curseur);
+			raf.getFilePointer();
+			raf.writeBytes(uneString);
+			raf.seek(raf.length());
+			raf.getFilePointer();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void ecrireLong (RandomAccessFile raf, Long curseur, Long unLong) {
+		try {
+			raf.seek(curseur);
+			raf.getFilePointer();
+			raf.writeLong(unLong);
+			raf.seek(raf.length());
+			raf.getFilePointer();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void ecrireStagiaire(RandomAccessFile raf, Long curseur, Stagiaire stagiaire) {
+		try {
+			curseur = raf.length();
+			//long unLong = -2L;
+			ecrireString(raf, curseur, stagiaire.getNom());
+			curseur = raf.length();
+			ecrireString(raf, curseur, stagiaire.getPrenom());
+			curseur = raf.length();
+			ecrireString(raf, curseur, stagiaire.getDepartement());
+			curseur = raf.length();
+			ecrireString(raf, curseur, stagiaire.getPromotion());
+			curseur = raf.length();
+			ecrireString(raf, curseur, stagiaire.getAnnee());
+			curseur=raf.length();			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void ecrireFichier(List<Noeud3> noeuds) {
+		RandomAccessFile raf = null;
+		Long curseur=0L;
+		try {
+			raf=new RandomAccessFile("annuaireArbreBinaire.txt", "rw");
+			for (int i = 0; i<noeuds.size(); i++) {
+				Noeud3 noeud = new Noeud3(noeuds.get(i).getStagiaire(), noeuds.get(i).getfG(), noeuds.get(i).getfD());
+				curseur = raf.length();
+				raf.getFilePointer();
+				ecrireStagiaire(raf, curseur, noeuds.get(i).getStagiaire());
+				curseur=raf.length();
+				raf.getFilePointer();
+				int indexFG = 73 * noeuds.indexOf(noeud.getfG());
+				int indexFD = 73 * noeuds.indexOf(noeud.getfD());
+				ecrireLong(raf, curseur, (long) indexFG);
+				curseur = raf.length();
+				raf.getFilePointer();
+				ecrireLong(raf, curseur, (long) indexFD);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				raf.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	}
 
 
  
