@@ -529,11 +529,57 @@ public class StagiaireDao {
 		}
 		
 	}
-
-
- 
-
-	 
 	
+	
+	public static long lireLong (RandomAccessFile raf, Long curseur) {
+		long leLong = 0L;
+		try {
+			raf.seek(curseur);
+			raf.getFilePointer();
+			leLong = raf.readLong();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return leLong;
+	}
+	
+	
+	public static long chercherNom (RandomAccessFile raf, String nomRecherche, Long curseur) {
+		long indexRecherche = 0L;
+		try {
+			String nomStagiaire = "";
+			Long posLimite = curseur + 21L;
+			for (long i = curseur; i<posLimite; i++) {
+				raf.seek(curseur);
+				raf.getFilePointer();
+				nomStagiaire = nomStagiaire + (char)raf.readByte();
+				curseur = curseur + 1L;
+			}
+			curseur = curseur - 21L;
+			nomStagiaire = nomStagiaire.trim();
+			if (nomRecherche.compareTo(nomStagiaire) == 0) {
+				
+			} else if (curseur >= 0 && curseur < raf.length() && nomRecherche != nomStagiaire) {
+				
+				if (nomRecherche.compareTo(nomStagiaire) < 0) {
+					curseur = curseur + 57L;
+					curseur = lireLong(raf, curseur);
+				} else if (nomRecherche.compareTo(nomStagiaire) > 0) {
+					curseur = curseur +57L + 8L;
+					curseur = lireLong(raf, curseur);
+				}
+				raf.seek(curseur);
+				raf.getFilePointer();
+				chercherNom(raf, nomRecherche, curseur);
+			}
+			indexRecherche=curseur;
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return indexRecherche;
+	}
+
 }
 
