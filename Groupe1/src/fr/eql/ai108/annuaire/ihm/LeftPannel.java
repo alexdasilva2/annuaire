@@ -5,11 +5,11 @@ import javafx.scene.layout.BorderPane;
 
 public class LeftPannel extends BorderPane {
 	private BoutonPannel bp = new BoutonPannel();
-	private FormPannel fp = new FormPannel();
+	//private FormPannel fp = new FormPannel();
 	
 	public LeftPannel() {
 		setTop(bp);
-		setBottom(fp);
+		
 	}
 
 	public BoutonPannel getBp() {
@@ -20,13 +20,13 @@ public class LeftPannel extends BorderPane {
 		this.bp = bp;
 	}
 
-	public FormPannel getFp() {
-		return fp;
-	}
-
-	public void setFp(FormPannel fp) {
-		this.fp = fp;
-	}
+//	public FormPannel getFp() {
+//		return fp;
+//	}
+//
+//	public void setFp(FormPannel fp) {
+//		this.fp = fp;
+//	}
 	
 	
 

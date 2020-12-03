@@ -8,11 +8,11 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.RandomAccess;
+
+
 
 public class StagiaireDao {
-	
-	
+		
 	public static int[] compterChar() { 
 		//fromTextFile originel stagiaires.txt
 		//méthode qui compte le nombre de caractères de chaque champ
@@ -244,7 +244,7 @@ public class StagiaireDao {
 		}
 		tailleLigne = tailleStrStagiaire + 16; //la String stagiaire + 16 (taille de deux longs pour les positions des fils)
 		try {
-			raf = new RandomAccessFile("TestRAF.txt", "r"); // !! a changer pour mettre le vrai fichier binaire !!
+			raf = new RandomAccessFile("C:/Users/formation/Desktop/annuaireArbreBinaire.txt", "r"); // !! a changer pour mettre le vrai fichier binaire !!
 			for (long i = 0; i < (raf.length()/(long)tailleLigne); i++) { 
 				position = i*tailleLigne; //je place le pointeur au début de chaque stagiaire
 				raf.seek(position);
@@ -501,7 +501,7 @@ public class StagiaireDao {
 		RandomAccessFile raf = null;
 		Long curseur=0L;
 		try {
-			raf=new RandomAccessFile("annuaireArbreBinaire.txt", "rw");
+			raf=new RandomAccessFile("C:/Users/formation/Desktop/annuaireArbreBinaire.txt", "rw");
 			for (int i = 0; i<noeuds.size(); i++) {
 				Noeud3 noeud = new Noeud3(noeuds.get(i).getStagiaire(), noeuds.get(i).getfG(), noeuds.get(i).getfD());
 				curseur = raf.length();
@@ -580,6 +580,70 @@ public class StagiaireDao {
 		}
 		return indexRecherche;
 	}
+
+	public static List<Noeud3> noeudsFromRaf() {
+		List<Noeud3> noeuds = new ArrayList<Noeud3>();
+		List<Stagiaire> stagiaires = new ArrayList<Stagiaire>();
+		stagiaires = stagiaireFromRaf();
+		Noeud3 racine = new Noeud3(stagiaires.get(0), null, null);
+		noeuds.add(racine);
+		for (int i =1; i<stagiaires.size(); i++) {
+			Noeud3 noeud = new Noeud3(stagiaires.get(i), null, null);
+			Noeud3.ajouterNoeud3(noeud, racine);
+			noeuds.add(noeud);
+		}
+		return noeuds;
+	}
+
+	
+	private static List<Noeud3> noeuds = new ArrayList<Noeud3>();
+	
+	public static List<Noeud3> ListeOrdonnee2(Noeud3 noeud) {
+         if (noeud!=null)
+         {
+        	 ListeOrdonnee2(noeud.getfG());
+             noeuds.add(noeud);
+             ListeOrdonnee2(noeud.getfD());
+         }
+         return noeuds;
+    }
+	
+	public static List<Stagiaire> trierRaf() {
+		List<Stagiaire> stagiaires = new ArrayList<Stagiaire>();
+		stagiaires = StagiaireDao.stagiaireFromRaf();
+		List<Noeud3> noeuds = new ArrayList<Noeud3>();
+		Noeud3 racine = new Noeud3(stagiaires.get(0), null, null);
+		noeuds.add(racine);
+		for (int i =1; i<stagiaires.size(); i++) {
+			Noeud3 noeud = new Noeud3(stagiaires.get(i), null, null);
+			Noeud3.ajouterNoeud3(noeud, racine);
+			noeuds.add(noeud);
+		}
+		List<Noeud3> noeuds2 = new ArrayList<Noeud3>();
+		noeuds2= StagiaireDao.ListeOrdonnee2(racine);
+		
+		List<Stagiaire> listeTriee = new ArrayList<Stagiaire>();
+		for (int i = 0; i<noeuds2.size(); i++) {
+			Stagiaire stagiaire = new Stagiaire();
+			stagiaire.setNom(noeuds2.get(i).getStagiaire().getNom());
+			stagiaire.setPrenom(noeuds2.get(i).getStagiaire().getPrenom());
+			stagiaire.setDepartement(noeuds2.get(i).getStagiaire().getDepartement());
+			stagiaire.setPromotion(noeuds2.get(i).getStagiaire().getPromotion());
+			stagiaire.setAnnee(noeuds2.get(i).getStagiaire().getAnnee());
+			listeTriee.add(stagiaire);
+		}
+		return listeTriee;
+	}
+
+
+	public static List<Noeud3> getNoeuds() {
+		return noeuds;
+	}
+
+
+	public static void setNoeuds(List<Noeud3> noeuds) {
+		StagiaireDao.noeuds = noeuds;
+	}	
 
 }
 

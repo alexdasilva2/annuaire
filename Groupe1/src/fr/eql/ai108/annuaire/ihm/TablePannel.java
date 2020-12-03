@@ -22,7 +22,8 @@ public class TablePannel extends AnchorPane {
 	@SuppressWarnings("unchecked")
 	public TablePannel() {
 		//methode correspondant au setOnAction du bouton visualiser liste de stagiaires en fait :
-		observableStagiaires = FXCollections.observableArrayList(StagiaireDao.stagiaireTrimFromTextFile()); //changer la méthode pour invoquer le fichier binaire
+		
+		observableStagiaires = FXCollections.observableArrayList(StagiaireDao.trierRaf()); //changer la méthode pour invoquer le fichier binaire
 		tableView = new TableView<>(observableStagiaires);
 		TableColumn<Stagiaire, String> colNom = new TableColumn<>("Nom");
 		colNom.setCellValueFactory(new PropertyValueFactory<>("Nom"));
@@ -40,10 +41,11 @@ public class TablePannel extends AnchorPane {
 		colAnnee.setCellValueFactory(new PropertyValueFactory<>("Annee"));
 		colAnnee.setStyle("-fx-alignment : CENTER");
 		
+		
 		tableView.getColumns().addAll(colNom, colPrenom, colDepartement,colPromotion,colAnnee);
 		tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		getChildren().add(tableView);
-		tableView.getSortOrder().add(colNom);  //Trie de la tableView grace a la methode SortOrder
+		//tableView.getSortOrder().add(colNom);  //Trie de la tableView grace a la methode SortOrder
 		
 		setPrefSize(1000, 500);
 		AnchorPane.setTopAnchor(tableView, 5.);
