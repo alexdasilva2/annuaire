@@ -39,7 +39,20 @@ public class Test3 {
 		//		for (int i =0; i<100; i++) {
 		//			System.out.println(strStagiaires.get(i));
 		//		}
-
+		
+		
+		//Test - création du fichier 
+		List<Noeud3> noeuds = new ArrayList<Noeud3>();
+		Noeud3 racine = new Noeud3(stagiaires.get(0), null, null);
+		noeuds.add(racine);
+		
+		for (int i =1; i<stagiaires.size(); i++) {
+			Noeud3 noeud = new Noeud3(stagiaires.get(i), null, null);
+			Noeud3.ajouterNoeud3(noeud, racine);
+			noeuds.add(noeud);
+		}
+		StagiaireDao.ecrireFichier(noeuds);
+		
 
 		// Test -recherche par nom : 
 
@@ -59,6 +72,13 @@ public class Test3 {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		//test méthode stagiairesFromRaf : 
+		List<Stagiaire> stagiairesRaf = new ArrayList<Stagiaire>();
+		stagiaires = StagiaireDao.stagiaireFromRaf();
+		for (int i = 0; i<20; i++) {
+			System.out.println(stagiaires.get(i));
 		}
 
 	}

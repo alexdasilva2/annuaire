@@ -11,8 +11,6 @@ public class MainApp extends Application {
 		launch(args);
 	}
 
-	
-	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		MainPanel root = new MainPanel();
@@ -21,7 +19,6 @@ public class MainApp extends Application {
 		primaryStage.sizeToScene();
 		primaryStage.setTitle("Programme annuaire");
 		primaryStage.show();
-		
 		
 	}
 }
