@@ -6,13 +6,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
 
 
 public class StagiaireDao {
-		
+
 	public static int[] compterChar() { 
 		//fromTextFile originel stagiaires.txt
 		//méthode qui compte le nombre de caractères de chaque champ
@@ -107,15 +108,15 @@ public class StagiaireDao {
 		return taillesMax;
 	}
 
-	
+
 	public static  String stagiaireToString (Stagiaire stagiaire) {
 		//méthode qui permet de récupérer une String unique avec toutes les infos d'un stagiaire
 		String leStagiaire = "";
 		leStagiaire = stagiaire.getNom()+stagiaire.getPrenom()+stagiaire.getDepartement()+stagiaire.getPromotion()+stagiaire.getAnnee();
 		return leStagiaire;
 	}
-	
-	
+
+
 	public static List<Stagiaire> stagiaireTrimFromTextFile () { 
 		//Méthode à utiliser pour récupérer les champs stagiaires de bonne taille depuis le fichier stagiaires.txt 
 		//renvoie une liste de Stagiaire, au bon format (taille champ + taille ligne)
@@ -225,8 +226,8 @@ public class StagiaireDao {
 		}
 		return stagiaires;
 	}
-	
-	
+
+
 	public static List<Stagiaire> stagiaireFromRaf() {
 		RandomAccessFile raf = null;
 		List<Stagiaire> stagiaires = new ArrayList<Stagiaire>();
@@ -253,47 +254,43 @@ public class StagiaireDao {
 				//on déplace le pointeur d'un octet, pour lire caractère par caractère
 				//concatène une string du champ + le caractère lu dans le RAF
 				//on arrête à la fin de chaque champ, et on passe au suivant
-					for (int j =0; j<taillesMax[0]; j++) {
-						raf.seek(position);
-						raf.getFilePointer();
-						nom = nom + (char)raf.readByte();
-						position++;
-					}
-					for (int j =0; j<taillesMax[1]; j++) {
-						raf.seek(position);
-						raf.getFilePointer();
-						prenom = prenom + (char)raf.readByte();
-						position++;
-					}
-					for (int j =0; j<taillesMax[2]; j++) {
-						raf.seek(position);
-						raf.getFilePointer();
-						departement = departement + (char)raf.readByte();
-						position++;
-					}
-					for (int j =0; j<taillesMax[3]; j++) {
-						raf.seek(position);
-						raf.getFilePointer();
-						promotion = promotion + (char)raf.readByte();
-						position++;
-					}
-					for (int j =0; j<taillesMax[4]; j++) {
-						raf.seek(position);
-						raf.getFilePointer();
-						annee = annee + (char)raf.readByte();
-						position++;
-					}
-					//on implémente un nouveau stagiaire avec les Strings lues dans le RAF 
-					//et on ajoute à la liste de stagiaires
-					Stagiaire stagiaire = new Stagiaire(nom, prenom, departement, promotion, annee);
-					stagiaires.add(stagiaire);
-					//on réinitialise avant de passer à la ligne suivante
-					nom = "";
-					prenom = "";
-					departement = "";
-					promotion = "";
-					annee = "";
-				}
+				byte[] byteNom = new byte[taillesMax[0]];
+				raf.seek(position);
+				raf.read(byteNom);
+				nom = new String(byteNom, StandardCharsets.ISO_8859_1);
+				position += taillesMax[0];
+				byte[] bytePrenom = new byte[taillesMax[1]];
+				raf.seek(position);
+				raf.read(bytePrenom);
+				prenom = new String(bytePrenom, StandardCharsets.ISO_8859_1);
+				position += taillesMax[1];
+				byte[] byteDepartement = new byte[taillesMax[2]];
+				raf.seek(position);
+				raf.read(byteDepartement);
+				departement = new String(byteDepartement, StandardCharsets.ISO_8859_1);
+				position += taillesMax[2];
+				byte[] bytePromotion = new byte[taillesMax[3]];
+				raf.seek(position);
+				raf.read(bytePromotion);
+				promotion = new String(bytePromotion, StandardCharsets.ISO_8859_1);
+				position += taillesMax[3];
+				byte[] byteAnnee = new byte[taillesMax[4]];
+				raf.seek(position);
+				raf.read(byteAnnee);
+				annee = new String(byteAnnee, StandardCharsets.ISO_8859_1);
+				position += taillesMax[4];
+
+				//on implémente un nouveau stagiaire avec les Strings lues dans le RAF 
+				//et on ajoute à la liste de stagiaires
+				Stagiaire stagiaire = new Stagiaire(nom, prenom, departement, promotion, annee);
+				stagiaires.add(stagiaire);
+				//on réinitialise avant de passer à la ligne suivante
+				nom = "";
+				prenom = "";
+				departement = "";
+				promotion = "";
+				annee = "";
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -305,7 +302,7 @@ public class StagiaireDao {
 		}
 		return stagiaires;
 	}
-	
+
 	//ancienne méthode : ne pas l'utiliser, elle part d'un fichier binaire avec une structure qui n'est pas bonne
 	public static List<Stagiaire> stagiaireFromBinaryFile(RandomAccessFile raf) {
 		List<Stagiaire> stagiaires = new ArrayList<Stagiaire>();
@@ -377,8 +374,8 @@ public class StagiaireDao {
 		}
 		return stagiaires;
 	}
-	
-	
+
+
 	public static List<Stagiaire> stagiaireFromTextFile (BufferedReader inputFile) {
 		//méthode à ne pas utiliser non plus, elle revnoie des stagiaires fromTextFile mais non trim
 		//trop d'espaces pour certains champs
@@ -448,8 +445,8 @@ public class StagiaireDao {
 		}
 		return stagiaires;
 	}
-	
-	
+
+
 	//méthodes pour écrire le fichierbinaire
 	public static void ecrireString (RandomAccessFile raf, Long curseur, String uneString) {
 		try {
@@ -463,7 +460,7 @@ public class StagiaireDao {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void ecrireLong (RandomAccessFile raf, Long curseur, Long unLong) {
 		try {
 			raf.seek(curseur);
@@ -476,7 +473,7 @@ public class StagiaireDao {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void ecrireStagiaire(RandomAccessFile raf, Long curseur, Stagiaire stagiaire) {
 		try {
 			curseur = raf.length();
@@ -496,7 +493,7 @@ public class StagiaireDao {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void ecrireFichier(List<Noeud3> noeuds) {
 		RandomAccessFile raf = null;
 		Long curseur=0L;
@@ -527,10 +524,10 @@ public class StagiaireDao {
 				e.printStackTrace();
 			}
 		}
-		
+
 	}
-	
-	
+
+
 	public static long lireLong (RandomAccessFile raf, Long curseur) {
 		long leLong = 0L;
 		try {
@@ -543,8 +540,8 @@ public class StagiaireDao {
 		}
 		return leLong;
 	}
-	
-	
+
+
 	public static long chercherNom (RandomAccessFile raf, String nomRecherche, Long curseur) {
 		long indexRecherche = 0L;
 		try {
@@ -559,9 +556,9 @@ public class StagiaireDao {
 			curseur = curseur - 21L;
 			nomStagiaire = nomStagiaire.trim();
 			if (nomRecherche.compareTo(nomStagiaire) == 0) {
-				
+
 			} else if (curseur >= 0 && curseur < raf.length() && nomRecherche != nomStagiaire) {
-				
+
 				if (nomRecherche.compareTo(nomStagiaire) < 0) {
 					curseur = curseur + 57L;
 					curseur = lireLong(raf, curseur);
@@ -574,7 +571,7 @@ public class StagiaireDao {
 				chercherNom(raf, nomRecherche, curseur);
 			}
 			indexRecherche=curseur;
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -595,19 +592,19 @@ public class StagiaireDao {
 		return noeuds;
 	}
 
-	
+
 	private static List<Noeud3> noeuds = new ArrayList<Noeud3>();
-	
+
 	public static List<Noeud3> ListeOrdonnee2(Noeud3 noeud) {
-         if (noeud!=null)
-         {
-        	 ListeOrdonnee2(noeud.getfG());
-             noeuds.add(noeud);
-             ListeOrdonnee2(noeud.getfD());
-         }
-         return noeuds;
-    }
-	
+		if (noeud!=null)
+		{
+			ListeOrdonnee2(noeud.getfG());
+			noeuds.add(noeud);
+			ListeOrdonnee2(noeud.getfD());
+		}
+		return noeuds;
+	}
+
 	public static List<Stagiaire> trierRaf() {
 		List<Stagiaire> stagiaires = new ArrayList<Stagiaire>();
 		stagiaires = StagiaireDao.stagiaireFromRaf();
@@ -621,7 +618,7 @@ public class StagiaireDao {
 		}
 		List<Noeud3> noeuds2 = new ArrayList<Noeud3>();
 		noeuds2= StagiaireDao.ListeOrdonnee2(racine);
-		
+
 		List<Stagiaire> listeTriee = new ArrayList<Stagiaire>();
 		for (int i = 0; i<noeuds2.size(); i++) {
 			Stagiaire stagiaire = new Stagiaire();
